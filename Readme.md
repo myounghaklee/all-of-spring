@@ -5,7 +5,7 @@
 - 정적 html, css, js이밎, 영상
 - nginx, apache
 
-## was ( wep aaplication server)
+## WAS ( wep aaplication server)
 - http기반으로 동작
 - 웹 서버 기능 포함 + 정적 리소스 제공 가능
 - 코드를 실행해서 애플리케이션 로직 수행
@@ -25,4 +25,11 @@
 Client -> WebServer -> WAS -> DB 를 연결하여 구성한다
 - WebServer는 정적리소스( HTML, CSS, JS, image)fmf cjflgkrh
 - 웹서버는 애플리케이션 로직같은 동적인 처리가 필요하면 WAS에 요청을 위임한다. 
-- WAS는 중요한 애플리케이션 로직을 전담하여 처리한다 
+- WAS는 중요한 애플리케이션 로직을 전담하여 처리한다
+
+이렇게 하면 효율적인 리소스 관리리가 가능하다 
+- 정적 리소스가 많이 사용되면 웹서버만 늘리는등 할 수 있다. 
+- 정적 리소스만 제공하는 웹 서버는 잘 죽지 않는다. 
+- 애플리케이션 로직이 동작하는 WAS 서버는 잘 죽음
+- WAS, DB장애시 WebServer서버가 오류화면을 제공할 수 있다. 
+
