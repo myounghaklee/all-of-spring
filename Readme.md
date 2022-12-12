@@ -33,3 +33,19 @@ Client -> WebServer -> WAS -> DB 를 연결하여 구성한다
 - 애플리케이션 로직이 동작하는 WAS 서버는 잘 죽음
 - WAS, DB장애시 WebServer서버가 오류화면을 제공할 수 있다. 
 
+## Servlet
+```java
+@WebServlet(name = "helloServlet", urlPatterns = "/hello")
+public class HelloServlet extends HttpServlet{
+    @Override
+  protected void service(httpServletRequest request, HttpServletResponse response ){
+        //application logic
+    }
+}
+
+```
+- urlPatterns()의 url이 호출되면 서블릿코드 실행
+- HTTP 요청정보를 편리하게 사용할 수 있는 HttpServletRequest
+- HTTP 응답 정보를 편리하게 제공할 수 있는 HttpServletResponse
+- 개발자는 HTTP 스펙을 매우 편리하게 사용
+- 
