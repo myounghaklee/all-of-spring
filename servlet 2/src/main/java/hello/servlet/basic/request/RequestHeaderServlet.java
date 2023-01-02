@@ -3,6 +3,7 @@ package hello.servlet.basic.request;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,11 +19,13 @@ public class RequestHeaderServlet extends HttpServlet {
         super.service(request, response);
         printHeaders(request);
         printHeaderUtils(request);
+
+
     }
 
     private void printHeaderUtils(HttpServletRequest request) {
         System.out.println("---Header 편의 조회 Start ----");
-        System.out.println("[HOst 편의 조회 ]");
+        System.out.println("[Host 편의 조회]");
         System.out.println("request.getServername() = :" + request.getServerName());//host header
         System.out.println("request.getServerPort() = :" + request.getServerPort()); // host header
         System.out.println();
@@ -30,9 +33,15 @@ public class RequestHeaderServlet extends HttpServlet {
         System.out.println("[Accept-Language 편의 조회]");
         request.getLocales().asIterator()
                 .forEachRemaining(locale -> System.out.println("locale = : " + locale));
-        System.out.println("request.getLocalie() = " + request.getLocales());
+        System.out.println("request.getLocale() = " + request.getLocales());
         System.out.println();
 
+        System.out.println("[cookie 편의 조회]");
+        if(request.getCookies()!=null){
+            for(Cookie c : request.getCookies()){
+                System.out.println(c.getName() + ": " + c.getValue());
+            }
+        }
 
     }
 
