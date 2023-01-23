@@ -12,6 +12,9 @@ public class Member {
     public Member() {
     }
 
+    public Member(String username, int age) {
+    }
+
     public Long getId() {
         return id;
     }
