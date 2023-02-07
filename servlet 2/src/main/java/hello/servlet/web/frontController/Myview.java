@@ -12,5 +12,5 @@ public class Myview {
     }
 
     public void render(HttpServletRequest request, HttpServletResponse response){}
-    
+
 }
