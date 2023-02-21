@@ -4,20 +4,17 @@ import hello.servlet.domain.member.Member;
 import hello.servlet.domain.member.MemberRepository;
 import hello.servlet.web.frontController.v4.ControllerV4;
 
+import java.util.List;
 import java.util.Map;
 
-public class MemberSaveControllerV4 implements ControllerV4 {
+public class MemberListControllerV4 implements ControllerV4 {
+
     private MemberRepository memberRepository = MemberRepository.getInstance();
     @Override
     public String process(Map<String, String> paramMap, Map<String, Object> model) {
-        String useranme = paramMap.get("username");
-        int age = Integer.parseInt(paramMap.get("age"));
+        List<Member> members = memberRepository.findAll();
+        model.put("members", members);
 
-        Member member = new Member(useranme,age);
-        memberRepository.save(member);
-
-        model.put("member", member);
-        return "save-result";
-
+        return "members";
     }
 }
