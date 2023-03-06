@@ -10,6 +10,8 @@ import org.springframework.web.servlet.mvc.Controller;
 public class OldController implements Controller {
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return null;
+        System.out.println("OldController.handlerRequest");
+
+        return new ModelAndView("new-form");
     }
 }
