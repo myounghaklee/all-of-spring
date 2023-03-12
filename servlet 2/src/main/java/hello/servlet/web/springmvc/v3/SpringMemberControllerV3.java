@@ -26,8 +26,8 @@ public class SpringMemberControllerV3 {
 
     @RequestMapping("/save")
     public String save(@RequestParam("username") String username,
-                             @RequestParam("age")int age,
-                             Model model) {
+                       @RequestParam("age") int age,
+                       Model model) {
 
         Member member = new Member(username, age);
         memberRepository.save(member);
@@ -37,11 +37,9 @@ public class SpringMemberControllerV3 {
     }
 
     @RequestMapping
-    public ModelAndView members() {
+    public String members(Model model) {
         List<Member> memberList = memberRepository.findAll();
-        ModelAndView mv = new ModelAndView("members");
-        mv.getModel().put("members", memberList);
-        return mv;
-
+        model.addAttribute("members", memberList);
+        return "members";
     }
 }
