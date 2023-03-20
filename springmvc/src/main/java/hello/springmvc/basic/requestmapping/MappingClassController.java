@@ -3,12 +3,12 @@ package hello.springmvc.basic.requestmapping;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/mapping/users")
+@RequestMapping
 public class MappingClassController {
 
     @GetMapping
     public String users(){
-        return "ge tUsers";
+        return "get users";
     }
 
     @PostMapping("/mapping/users")
