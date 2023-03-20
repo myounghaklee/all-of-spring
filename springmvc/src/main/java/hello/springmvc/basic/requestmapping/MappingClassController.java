@@ -8,15 +8,20 @@ public class MappingClassController {
 
     @GetMapping
     public String users(){
-        return "getUsers";
+        return "ge tUsers";
     }
 
-    @PostMapping
+    @PostMapping("/mapping/users")
     public String addUser(){return "post user";}
 
-    @GetMapping("/{userId}")
+    @PatchMapping("/mapping/users/{userId}")
     public String finduser(@PathVariable String userId){
         return "userId is" + userId;
+    }
+
+    @DeleteMapping("/mapping/users/{userId}")
+    public String delteUser(@PathVariable String userId){
+        return "delte userId = " + userId;
     }
 
 
