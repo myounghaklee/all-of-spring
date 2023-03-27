@@ -4,6 +4,7 @@ import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,5 +32,13 @@ public class RequestBodystringController {
 
         log.info("message Info ={}", messageBody);
         responseWriter.write("ok");
+    }
+
+    @PostMapping("/request-body-string-v3")
+    public HttpEntity<String> requestBodyStringV3(HttpEntity<String> httpEntity)throws IOException{
+        //String messageBody= StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+        String body = httpEntity.getBody();
+        log.info("message Info ={}", body);
+        return new HttpEntity<>("ok");
     }
 }
