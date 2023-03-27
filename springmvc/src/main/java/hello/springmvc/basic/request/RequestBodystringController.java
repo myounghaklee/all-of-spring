@@ -9,6 +9,9 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
@@ -17,6 +20,16 @@ public class RequestBodystringController {
     @PostMapping("/request-body-string-v1")
     public void requestBodyString(HttpServletRequest request, HttpServletResponse response)throws IOException{
         ServletInputStream inputStream = request.getInputStream();
-        StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+        String messageBody= StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+
+        log.info("message Info ={}", messageBody);
+    }
+
+    @PostMapping("/request-body-string-v2")
+    public void requestBodyStringV2(InputStream inputStream, Writer responseWriter)throws IOException{
+        String messageBody= StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+
+        log.info("message Info ={}", messageBody);
+        responseWriter.write("ok");
     }
 }
