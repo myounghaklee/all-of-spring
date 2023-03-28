@@ -8,6 +8,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,5 +42,14 @@ public class RequestBodystringController {
         String body = httpEntity.getBody();
         log.info("message Info ={}", body);
         return new HttpEntity<>("ok");
+    }
+
+    @ResponseBody
+    @PostMapping("/request-body-string-v4")
+    public String requestBodyStringV4(@RequestBody String messageBody){
+        //String messageBody= StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+
+        log.info("message Info ={}", messageBody);
+        return "ok";
     }
 }
