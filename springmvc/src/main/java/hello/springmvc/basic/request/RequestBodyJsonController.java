@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -31,4 +32,27 @@ public class RequestBodyJsonController {
 
         response.getWriter().write("ok");
     }
+
+    @PostMapping("/request-body-json-v2")
+    public String requestBodyJsonV2(@RequestBody String messageBody) throws IOException {
+
+        log.info("messageBody={}", messageBody);
+        HelloData helloData = objectMapper.readValue(messageBody, HelloData.class);
+        log.info("username ={}, age={}", helloData.getUsername(), helloData.getAge());
+
+        return "ok";
+    }
+
+
+    @PostMapping("/request-body-json-v3")
+    public String requestBodyJsonV3(@RequestBody String messageBody) throws IOException {
+
+        log.info("messageBody={}", messageBody);
+        HelloData helloData = objectMapper.readValue(messageBody, HelloData.class);
+        log.info("username ={}, age={}", helloData.getUsername(), helloData.getAge());
+
+        return "ok";
+    }
+
+
 }
