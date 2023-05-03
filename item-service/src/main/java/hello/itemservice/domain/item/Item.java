@@ -21,4 +21,10 @@ public class Item {
         this.price = price;
         this.quantity = quantity;
     }
+
+    public Item(String itemName, Integer price, Integer quantity) {
+        this.itemName = itemName;
+        this.price = price;
+        this.quantity = quantity;
+    }
 }
