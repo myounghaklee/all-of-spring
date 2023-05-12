@@ -30,6 +30,16 @@ public class BasicItemController {
         return "/basic/item";
     }
 
+    @GetMapping("/add")
+    public String addForm(){
+        return "basic/addForm";
+    }
+
+    @PostMapping
+    public String save(){
+        return "/basic/addForm";
+    }
+
     @PostMapping("/add")
     public String addItemV1(@RequestParam String itemName,
                             @RequestParam int price,
