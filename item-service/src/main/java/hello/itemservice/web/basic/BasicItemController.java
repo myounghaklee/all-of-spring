@@ -17,34 +17,44 @@ public class BasicItemController {
     private final ItemRepository itemRepository;
 
     @GetMapping
-    public String item(Model model){
+    public String item(Model model) {
         List<Item> itemList = itemRepository.findAll();
         model.addAttribute("items", itemList);
         return "basic/items";
     }
 
     @GetMapping("/{itemId}")
-    public String item(@PathVariable Long itemId, Model model){
+    public String item(@PathVariable Long itemId, Model model) {
         Item item = itemRepository.findById(itemId);
         model.addAttribute("item", item);
         return "/basic/item";
     }
 
     @GetMapping("/add")
-    public String addForm(){
+    public String addForm() {
         return "basic/addForm";
     }
 
     @PostMapping
-    public String save(){
-        return "/basic/addForm";
+    public String save(@RequestParam String itemName,
+                       @RequestParam Integer price,
+                       @RequestParam Integer quantity,
+                       Model model) {
+        Item item = new Item();
+        item.setItemName(itemName);
+        item.setPrice(price);
+        item.setQuantity(quantity);
+        itemRepository.save(item);
+
+        model.addAttribute("item", item);
+        return "/basic/item";
     }
 
-    @PostMapping("/add")
+    //    @PostMapping("/add")
     public String addItemV1(@RequestParam String itemName,
                             @RequestParam int price,
                             @RequestParam Integer quantity,
-                            Model model){
+                            Model model) {
         Item item = new Item();
         item.setItemName(itemName);
         item.setPrice(price);
@@ -54,12 +64,18 @@ public class BasicItemController {
         return "/basic/item";
     }
 
+    @PostMapping("/add")
+    public String addItemV2(@ModelAttribute("item") Item item, Model model) {
+        model.addAttribute("item", item);
+        return "/basic/item";
+    }
+
 
     /**
      * Test용 데이터
      */
     @PostConstruct
-    public void init(){
+    public void init() {
         itemRepository.save(new Item("itemA", 10000, 100));
         itemRepository.save(new Item("itemB", 10000, 100));
     }
