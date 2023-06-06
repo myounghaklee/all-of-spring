@@ -25,6 +25,7 @@ import java.util.Map;
 public class ValidationItemControllerV2 {
 
     private final ItemRepository itemRepository;
+    private final ItemValidator itemValidator;
 
     @GetMapping
     public String items(Model model) {
@@ -165,38 +166,7 @@ public class ValidationItemControllerV2 {
 
     @PostMapping("/add")
     public String addItemV4(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
-
-        log.info("objectName={}", bindingResult.getObjectName());
-        log.info("target={}", bindingResult.getTarget());
-        ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult, "itemName", "required");
-        //검증
-        if (!StringUtils.hasText(item.getItemName())) {
-            //bindingResult.addError(new FieldError("item", "itemName", "상품이름은 필수입니다."));
-//            bindingResult.addError(new FieldError("item", "itemName", item.getItemName(),
-//                    false, new String[]{"required.item.itemName"}, null, null));
-            bindingResult.rejectValue("itemName", "required");
-        }
-
-        if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
-            //bindingResult.addError(new FieldError("item", "price", "가격은 1,000 - 1,000,000까지 허용합니다."));
-//            bindingResult.addError(new FieldError("item", "price", item.getPrice(),
-//                    false, new String[]{"range.item.price"}, new Object[]{1000, 1000000}, null));
-
-            bindingResult.rejectValue("price", "range", new Object[]{1000, 1000000}, null);
-        }
-        if (item.getQuantity() == null || item.getQuantity() >= 9999) {
-            //bindingResult.addError(new FieldError("item", "quantity", "수량은 최대 9,999까지 허용합니다."));
-//            bindingResult.addError(new FieldError("item", "quantity", item.getQuantity(),
-//                    false, new String[]{"max.item.quantity"}, new Object[]{9999}, null));
-            bindingResult.rejectValue("quantity", "max");
-        }
-        //특정필드가 아닌 복합 룰 검증
-        if (item.getPrice() != null && item.getQuantity() != null) {
-            int resultPrice = item.getPrice() * item.getQuantity();
-            if (resultPrice < 10000) {
-                bindingResult.addError(new ObjectError("item", new String[]{"totalPriceMin"}, new Object[]{10000, resultPrice}, null));
-            }
-        }
+        itemValidator.validate(item, bindingResult);
 
         //검증 실패하면 다시 입력 폼으로
         if (bindingResult.hasErrors()) {
