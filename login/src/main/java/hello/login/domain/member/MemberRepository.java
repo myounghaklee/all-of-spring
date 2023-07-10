@@ -45,4 +45,8 @@ public class MemberRepository {
     public void clearStore(){
         store.clear();
     }
+
+    public Member findById(Long memberId) {
+        return store.get(memberId);
+    }
 }
