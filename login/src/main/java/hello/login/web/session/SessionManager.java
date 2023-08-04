@@ -42,14 +42,29 @@ public class SessionManager {
         return sessionStore.get(sessionCookie.getValue());
 
     }
+    /**
+     * session 만료
+     */
+    public void expire(HttpServletRequest request){
+        Cookie sessionCookie = findCookie(request, SESSION_COOKIE_NAME);
+        if(sessionCookie!= null){
+            sessionStore.remove(sessionCookie.getValue());
+        }
+    }
 
+
+    /**
+     * validate session expire
+     * @param request
+     * @param cookieName
+     * @return
+     */
     public Cookie findCookie(HttpServletRequest request, String cookieName){
         Cookie[] cookies = request.getCookies();
         if(cookies == null){
             return null;
         }
         return Arrays.stream(cookies)
-                .filter(cookie -> cookie.getName().equals(cookieName))
                 .findAny()
                 .orElse(null);
     }
